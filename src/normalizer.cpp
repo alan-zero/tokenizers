@@ -45,7 +45,7 @@ Normalizer::Ptr NormalizerConfig::create() const {
     return Normalizer::Ptr(new ReplaceNormalizer(*pattern, *content));
   }
   if (type == "Sequence") {
-    if (!normalizers or normalizers->empty()) {
+    if (!normalizers || normalizers->empty()) {
       throw std::runtime_error(
           "Missing normalizers for Normalizer of type Sequence");
     }
