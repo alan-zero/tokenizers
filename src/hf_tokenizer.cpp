@@ -16,6 +16,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <limits>
 
 // Third Party
 #include <nlohmann/json.hpp>
@@ -475,7 +476,7 @@ Result<std::vector<uint64_t>> HFTokenizer::byte_pair_encode_(
               key.c_str(),
               start,
               stop);
-          return uint64_t(0); // Return unknown token ID instead of padding
+          return std::numeric_limits<uint64_t>::max(); // Return unknown token ID instead of padding
         }
       });
 }
@@ -521,7 +522,7 @@ std::vector<uint64_t> HFTokenizer::_byte_pair_merge(
     }
 
     uint64_t token_id = func(char_start, char_start + char_len);
-    if (token_id != 0) { // Assuming 0 is padding/error token
+    if (token_id != std::numeric_limits<uint64_t>::max()) {
       word.add(token_id, char_len);
     } else {
       // Handle unknown character
